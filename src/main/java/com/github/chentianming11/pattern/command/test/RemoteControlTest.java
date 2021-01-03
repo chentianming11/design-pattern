@@ -1,0 +1,44 @@
+package com.github.chentianming11.pattern.command.test;
+
+
+import com.github.chentianming11.pattern.command.command.*;
+import com.github.chentianming11.pattern.command.control.RemoteControl;
+import com.github.chentianming11.pattern.command.device.GarageDoor;
+import com.github.chentianming11.pattern.command.device.Light;
+import com.github.chentianming11.pattern.command.device.Stereo;
+
+/**
+ * @author 陈添明
+ * @date 2019/1/7
+ */
+public class RemoteControlTest {
+
+    public static void main(String[] args) {
+
+        RemoteControl remoteControl = new RemoteControl();
+        Light light = new Light();
+        Stereo stereo = new Stereo();
+        GarageDoor garageDoor = new GarageDoor();
+
+        LightOnCommand lightOnCommand = new LightOnCommand(light);
+        LightOffCommand lightOffCommand = new LightOffCommand(light);
+        GarageDoorOpenCommand garageDoorOpenCommand = new GarageDoorOpenCommand(garageDoor);
+        GarageDoorCloseCommand garageDoorCloseCommand = new GarageDoorCloseCommand(garageDoor);
+        StereoOnWithCdCommand stereoOnWithCdCommand = new StereoOnWithCdCommand(stereo);
+        StereoOffCommand stereoOffCommand = new StereoOffCommand(stereo);
+
+        remoteControl.setCommand(0, lightOnCommand, lightOffCommand);
+        remoteControl.setCommand(1, garageDoorOpenCommand, garageDoorCloseCommand);
+        remoteControl.setCommand(2, stereoOnWithCdCommand, stereoOffCommand);
+
+        System.out.println(remoteControl);
+
+        remoteControl.onButtonPushed(0);
+        remoteControl.onButtonPushed(1);
+        remoteControl.onButtonPushed(2);
+
+        remoteControl.offButtonPushed(0);
+        remoteControl.offButtonPushed(1);
+        remoteControl.offButtonPushed(2);
+    }
+}
